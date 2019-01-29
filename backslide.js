@@ -42,6 +42,7 @@ Commands:
     -r, --strip-notes     Strip presenter notes                     
     -h, --handouts        Strip slide fragments for handouts
     -l, --no-inline       Do not inline external resources          
+    -f, --no-fixrelative  Do not fix relative paths
   s, serve [dir]          Start dev server for specified dir.  [default: .]
     -p, --port            Port number to listen on             [default: 4100]
     -s, --skip-open       Do not open browser on start              
@@ -447,7 +448,7 @@ class BackslideCli {
           _.slice(1),
           this._args['strip-notes'],
           this._args.handouts,
-          true,
+          !this._args['no-fixrelative'],
           !this._args['no-inline']);
       case 'p':
       case 'pdf':
@@ -464,7 +465,7 @@ class BackslideCli {
 }
 
 new BackslideCli(require('minimist')(process.argv.slice(2), {
-  boolean: ['verbose', 'force', 'skip-open', 'strip-notes', 'handouts', 'no-inline'],
+  boolean: ['verbose', 'force', 'skip-open', 'strip-notes', 'handouts', 'no-inline', 'no-fixrelative'],
   string: ['output', 'decktape', 'template'],
   number: ['port', 'wait'],
   alias: {
@@ -475,6 +476,7 @@ new BackslideCli(require('minimist')(process.argv.slice(2), {
     s: 'skip-open',
     r: 'strip-notes',
     l: 'no-inline',
+    f: 'no-fixrelative',
     t: 'template',
     h: 'handouts'
   },
